@@ -1,0 +1,47 @@
+---
+layout: single
+permalink: /tags/
+hidden: true
+title: "Browse By Tags"
+author_profile: false
+read_time: false
+toc: false
+toc_label: Tag List
+toc_icon: tags
+search: false
+share: false
+comments: false
+header:
+  overlay_color: "rgb(0, 130, 114)"
+  overlay_image: /images/header/files.jpg  
+---
+
+{% assign all_tags = site.pages | where_exp: "p", "p.hidden != true" | map: 'tags' | join: ','  | split: ',' | uniq | sort %}
+
+<script>
+function tagJump() {
+  var url = location.href;
+  var tag = document.getElementById("tagSelect").value;
+  location.href = "#"+tag;
+}
+</script>
+
+<h1>Jump to tag:</h1>
+<select onchange="tagJump()" id="tagSelect">
+  {% for tag in all_tags %}
+    <option>{{ tag }}</option>
+  {% endfor %}
+</select>
+
+{% for tag in all_tags %}
+  <h2 id="{{ tag }}">{{ tag }}</h2>
+  <ul>
+  {% for page in site.pages %}
+    {% if page.tags contains tag %}
+      {% unless page.hidden %}
+      <li><a href="{{ page.url }}">{{ page.title }}</a></li>
+      {% endunless %}
+    {% endif %}
+  {% endfor %}
+  </ul>
+{% endfor %}

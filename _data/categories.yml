@@ -1,0 +1,49 @@
+- name: automation
+  title: Automation
+  image: /images/categories/auto.png
+  desc: "Operate at scale using scaffolding, infrastructure as code and scripting to automate"
+
+- name: cloud-native
+  title: Cloud Native
+  image: /images/categories/containers.png
+  desc: "Understand how to build cloud native, modern apps with containers, serverless & Kubernetes"
+
+- name: data-ai
+  title: "Data & AI"
+  image: /images/categories/data-ai.png
+  desc: "Real world AI with cognitive services, bots data-analytics and machine learning"
+
+- name: devops
+  title: DevOps
+  image: /images/categories/devops.png
+  desc: "Build better software faster with DevOps practices; CI & CD pipelines, automation and infra as code"
+
+- name: fundamentals
+  title: Fundamentals
+  image: /images/categories/fundamentals.png
+  desc: "Core concepts for Azure and ecosystem tooling, configuration guidance, etc."
+
+- name: infra
+  title: Infrastructure
+  image: /images/categories/infra.png
+  desc: "Virtual machines & networking are still the backbone of many cloud architectures"
+
+- name: iot
+  title: Internet Of Things
+  image: /images/categories/iot.png
+  desc: "Build production-grade IoT applications and configure your IoT solution"
+
+- name: prereqs
+  title: Pre-Requisites
+  image: /images/categories/prereqs.png
+  desc: "Get yourself set up and ready to take on the labs"
+
+- name: security
+  title: Security
+  image: /images/categories/security.png
+  desc: "Securing your data & applications in the cloud. Managing access and identities with Azure AD"
+
+- name: web
+  title: Web & Mobile
+  image: /images/categories/web.png
+  desc: "Developing using web & mobile platforms using RESTful APIs. Azure platform services and API management"

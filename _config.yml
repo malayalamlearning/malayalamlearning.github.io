@@ -1,0 +1,232 @@
+#
+# Azure Citadel - minimal-mistakes config
+# =======================================
+# - This is a heavily modified config, un-used sections have been removed
+# - For an unmodifed config see _config_orig.yml
+#
+# Ben Coleman, Dec 2018
+# Modified: Jan 2019 - Removed Algolia search `search false`
+#           Jan 2019 - Switched to Prism.js for synatx highlighting
+#                      Set `highlighter: none` & `syntax_highlighter_opts.disable: true`
+#
+
+# Extra Azure integration things, keys etc. These are all safe to have public
+azure_app_insights       : "2702934d-41f5-4a1c-beb6-0c631fd8f28f" #"75483cef-e0a0-45aa-8c2e-019f5a1acb2f"
+azure_search_key         : "2F9C8576FF9E1D45FE63CA285A2500C5"
+azure_search_account     : "citadel"
+azure_search_index       : "citadel-index"
+
+# Skin (note this is a modified & custom skin file)
+minimal_mistakes_skin    : "citadel"
+
+# Site Settings
+locale                   : "en-GB"
+title                    : "Malayalam Learning"
+logo                     : "/images/site/malayalamlearning-logo.jpg"
+title_separator          : "-"
+name                     : "colorvibes"
+description              : "Global Malayalam Education Community"
+url                      : # Left empty so default used
+baseurl                  : # Left empty so default used "/"
+repository               : https://github.com/malayalamlearning/malayalamlearning
+teaser                   : "/images/teaser/default.png"
+breadcrumbs              : false  # These do not work with the site structure
+words_per_minute         : 100
+safe                     : false
+comments:
+  provider               : disqus
+  disqus:
+    shortname            : https-ukpducim-github-io
+
+atom_feed:
+  path                   : /feed.xml
+
+# Switched to Azure Search, using json-generate.rb plugin
+search                   : false
+# search_full_content      : true
+# search_provider          : algolia
+# search:
+#   application_id         : 7OH2BGCS3F                       # YOUR_APPLICATION_ID
+#   index_name             : Azure_Citadel                    # YOUR_INDEX_NAME
+#   search_only_api_key    : c7d0d56e6a342c7a26ae845c63cef275 # YOUR_SEARCH_ONLY_API_KEY
+#   powered_by             : true
+
+# Analytics
+# We use App Insghts, see _includes/head/custom.html for snippet
+
+
+# Site Author
+# - NEED TO REVIEW THIS, DON'T THINK IT'S EVER USED ANYWHERE
+# (It does show in the feed.xml)
+author:
+  name             : "Richard Cheney"
+  avatar           : images/authors/rich-c.jpg
+  bio              : Cloud Solution Architect.<br/>Infrastructure as code, automation, networking, storage, compute
+  location         : "UK"
+  email            : richard.cheney@microsoft.com
+
+
+# Site Footer - Edited to include disclaimer
+footer:
+  links:
+    - label: "Disclaimer"
+      icon: "fas fa-fw fa-balance-scale"
+      url: "/disclaimer"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/malayalamlearning/malayalamlearning"
+
+# Reading Files
+include:
+  - .htaccess
+  - _pages
+exclude:
+  - templates
+  - _staging
+  - _site_assets
+  - "*.sublime-project"
+  - "*.sublime-workspace"
+  - vendor
+  - .asset-cache
+  - .bundle
+  - .jekyll-assets-cache
+  - .sass-cache
+  - assets/js/plugins
+  - assets/js/_main.js
+  - assets/js/vendor
+  - Capfile
+  - CHANGELOG
+  - config
+  - Gemfile
+  - Gruntfile.js
+  - gulpfile.js
+  - LICENSE
+  - log
+  - node_modules
+  - package.json
+  - Rakefile
+  - README
+  - tmp
+  - /docs # ignore Minimal Mistakes /docs
+  - /test # ignore Minimal Mistakes /test
+  - CNAME
+keep_files:
+  - .git
+  - .svn
+encoding: "utf-8"
+markdown_ext: "markdown,mkdown,mkdn,mkd,md"
+
+
+# Conversion
+# Note - I've disabled the default Rouge highlighter
+#        And enabled Prism.js https://prismjs.com
+markdown: kramdown
+highlighter: rouge
+#highlighter: none
+lsi: false
+excerpt_separator: "\n\n"
+incremental: false
+
+
+# Markdown Processing
+kramdown:
+  input: GFM
+  hard_wrap: false
+  auto_ids: true
+  footnote_nr: 1
+  entity_output: as_char
+  toc_levels: 1..6
+  smart_quotes: lsquo,rsquo,ldquo,rdquo
+  enable_coderay: false
+  syntax_highlighter_opts:
+    disable: true
+
+# Sass/SCSS
+sass:
+  sass_dir: _sass
+  style: compressed # http://sass-lang.com/documentation/file.SASS_REFERENCE.html#output_style
+
+
+# Outputting
+permalink: /:categories/:title/
+paginate: 5 # amount of posts to show - NOT USED ANYWHERE YET
+paginate_path: /page:num/
+timezone: Etc/GMT # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+
+
+# Plugins (previously gems:)
+plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-feed
+  - jemoji
+  - jekyll-include-cache
+
+# mimic GitHub Pages with --safe
+whitelist:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-feed
+  - jemoji
+  - jekyll-include-cache
+
+
+# Archives
+# category_archive:
+#   type: liquid
+#   path: /categories/
+tag_archive:
+  type: liquid
+  path: /tags/
+
+
+# HTML Compression
+# - http://jch.penibelst.de/
+compress_html:
+  clippings: all
+  ignore:
+    envs: development
+
+
+#
+# Defaults for all user content
+# These defaults are Azure Citadel specific
+#
+# Note. All posts need to have `category: news` for them to show up in the news section
+#
+defaults:
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
+      comments: true
+      share: true
+      toc: true
+      toc_sticky: true
+      toc_depth: 2
+      header:
+        teaser: /images/teaser/default.png
+        overlay_color: "rgb(0, 120, 215)"
+        overlay_filter: 0.5
+
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: single
+      category: news
+      author_profile: true
+      read_time: false
+      comments: true
+      share: true
+      toc: false
+      excerpt: ""
+      header:
+        teaser: /images/teaser/default.png
+        overlay_image: /images/header/news.jpg
+        overlay_filter: 0.5

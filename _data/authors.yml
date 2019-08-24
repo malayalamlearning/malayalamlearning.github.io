@@ -1,0 +1,169 @@
+template:
+    name     :
+    bio      :
+    avatar   :
+    email    :
+    twitter  :
+    github   :
+    linkedin :
+
+Ben Coleman:
+    name     : Ben Coleman
+    bio      : Cloud Solution Architect.<br/>Containers, Open source, Node.js, DevOps, automation
+    avatar   : images/authors/benc.jpg
+    email    : ben.coleman@microsoft.com
+    twitter  : BenCodeGeek
+    github   : benc-uk
+    linkedin : benc-uk
+    links:
+      - label: "Website"
+        icon : "fas fa-fw fa-link"
+        url  : "http://benco.io"
+
+Richard Cheney:
+    name     : Richard Cheney
+    bio      : Cloud Solution Architect.<br/>Infrastructure as code, automation, networking, storage, compute
+    avatar   : images/authors/rich-c.jpg
+    email    : richard.cheney@microsoft.com
+    twitter  : RichCheneyAzure
+    github   : richeney
+    linkedin : richardcheney
+
+Tom Wilde:
+    name     : Tom Wilde
+    bio      : Cloud Solution Architect.<br/>Security, networking, storage, compute
+    avatar   : images/authors/tom-w.png
+    email    : tom.wilde@microsoft.com
+    twitter  : wilde_it
+    github   : towilde
+    linkedin : towilde
+
+John Duckmanton:
+    name     : John Duckmanton
+    bio      :
+    avatar   : images/authors/john-d.jpg
+    email    : john.duckmanton@microsoft.com
+    twitter  :
+    github   :
+    linkedin :
+
+Dan Baker:
+    name     : Azure Dan
+    bio      : Dan Baker (aka Azure Dan) is the UK Azure regional skills evangelist
+    avatar   : images/authors/dan-b.jpg
+    email    : dan.baker@microsoft.com
+    twitter  : azuredan
+    github   :
+    linkedin :
+
+Mahesh Balija:
+    name     : Mahesh Balija
+    bio      :
+    avatar   : images/authors/mahesh-b.jpg
+    email    : Mahesh.Balija@microsoft.com
+    twitter  :
+    github   :
+    linkedin :
+
+Naveed Hussain:
+    name     : Naveed Hussain
+    bio      :
+    avatar   : images/authors/naveed-h.jpg
+    email    : naveed.hussain@microsoft.com
+    twitter  :
+    github   :
+    linkedin :
+
+Faris Haddad:
+    name     : Faris Haddad
+    bio      :
+    avatar   : images/authors/faris-h.jpg
+    email    : faris.haddad@microsoft.com
+    twitter  :
+    github   : farishaddad
+    linkedin :
+
+Robin Lester:
+    name     : Robin Lester
+    bio      :
+    avatar   : images/authors/robin-l.jpg
+    email    : robin.lester@microsoft.com
+    twitter  :
+    github   :
+    linkedin :
+
+Phil Harvey:
+    name     : Phil Harvey
+    bio      :
+    avatar   : images/authors/phil-h.jpg
+    email    : phil.harvey@microsoft.com
+    twitter  : codebeard
+    github   :
+    linkedin :
+
+Mark Harrison:
+    name     : Mark Harrison
+    bio      :
+    avatar   : images/authors/mark-h.jpg
+    email    : mark.harrison@microsoft.com
+    twitter  :
+    github   :
+    linkedin :
+
+Matt Biggs:
+    name     : Matthew Biggs
+    bio      :
+    avatar   : images/authors/matt-b.jpeg
+    email    : matthew.biggs@microsoft.com
+    twitter  : azurecloudmatt
+    github   :
+    linkedin :
+
+Giles Davies:
+    name     : Giles Davies
+    bio      :
+    avatar   : images/authors/giles-d.jpg
+    email    : giles.davies@microsoft.com
+    twitter  :
+    github   :
+    linkedin :
+
+Mike James:
+    name     : Mike James
+    bio      :
+    avatar   : images/authors/mike-james.jpg
+    email    :
+    twitter  :
+    github   :
+    linkedin :
+
+Robin-Manuel Thiel:
+    name     : Robin-Manuel Thiel
+    bio      :
+    avatar   : images/authors/robin-manuel-thiel.jpg
+    email    :
+    twitter  :
+    github   :
+    linkedin :
+
+Jonathan Lyon:
+    name     : Jonathan Lyon
+    bio      :
+    avatar   : images/authors/jonathan-lyon.jpg
+    email    : jonathan.lyon@microsoft.com
+    twitter  :
+    github   :
+    linkedin :
+
+Dave Placeholder:
+    name     : Dave Placeholder
+    bio      : Goat Herder.<br/>Cheese, goats cheese, other types of cheese, mostly cheese
+    avatar   : images/authors/harold.jpg
+    email    : dave.placeholder@microsoft.com
+    twitter  : Coffee_Dad
+    github   : monsieurfromage
+    linkedin : daveplaceholder
+    links:
+      - label: "Blogsite"
+        icon : "fas fa-fw fa-link"
+        url  : "http://monsieurfromageblog.com"      # Author details.

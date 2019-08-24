@@ -1,0 +1,235 @@
+---
+layout: single
+permalink: /search/
+hidden: true
+title: "Search Azure Citadel"
+author_profile: false
+read_time: false
+search: false
+toc: false
+share: false
+comments: false
+classes: wide
+entries_layout: grid
+header:
+  overlay_color: "rgb(0, 130, 114)"
+  overlay_image: /images/header/search.jpg    
+---
+<style>
+.searchbox {
+  border: 2px solid rgb(0,120,215);
+  border-radius: 6px;
+  background-color: white;
+  display: flex;
+  padding: 10px
+}
+.searchbox input {
+  background-color: white;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+}
+.searchbox:focus-within {
+  box-shadow: 0 0 10px #479ee6;
+}
+.searchbox span {
+  padding-right: 10px;
+  font-size: 30px;
+}
+.searchbox img {
+  align-self: center
+}
+.note {
+  float: right;
+  font-size: 12px;
+  color: #555;
+}
+</style>
+
+<div class="searchbox">
+  <span>&#x1f50e</span> <input id="query" type="text" autocomplete="off" placeholder="What are you looking for?">
+  <img src="/images/site/ajax-loader.gif" id="spinner"/>
+</div>
+
+<div class="note">Powered by Azure Search</div>
+
+<br/>
+
+<div class="entries-grid" id="results">
+</div>
+
+<!-- Use recent version of jQuery from CDN -->   
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+<!--
+  Azure search integration code
+  Ben Coleman, 2019
+-->
+<script>
+  //
+  // Now set in _config.yml change setting there!
+  //
+  const AZURE_SEARCH_KEY = "{{ site.azure_search_key }}"
+  const AZURE_SEARCH_ACCOUNT = "{{ site.azure_search_account }}"
+  const AZURE_SEARCH_INDEX = "{{ site.azure_search_index }}"
+  const AZURE_SEARCH_URL = `https://${AZURE_SEARCH_ACCOUNT}.search.windows.net/indexes/${AZURE_SEARCH_INDEX}/docs?api-version=2017-11-11&api-key=${AZURE_SEARCH_KEY}`
+  
+  // Main listen to key events, delays for 500ms and then calls runSearch
+  $("#query").bind("keyup", delay(runSearch, 500));
+
+  // Spinner starts hidden
+  $("#spinner").hide();
+
+  // use existing searchTerm if it's there
+  let q = cookieRead("searchTerm")
+  if(q) {
+    $("#query").val(q)
+    runSearch()
+  }
+
+  //
+  // Main function to query Azure Search and process results
+  //
+  function runSearch() {
+    let query = $("#query").val().trim()
+    if(!query) { 
+      $("#spinner").hide(); 
+      return 
+    }
+
+    let searchApiRequest = {
+      url: `${AZURE_SEARCH_URL}&search=${query}`,
+      method: 'GET',
+      headers: {
+        // These weird headers are how we get the search ID, apparently
+        'x-ms-azs-return-searchid': 'true',
+        'Access-Control-Expose-Headers': 'x-ms-azs-searchid'
+      }
+    }
+
+    // Query Azure Search
+    $.get(searchApiRequest, function(data, status, xhr) {      
+      $("#spinner").hide()
+      cookieCreate("searchTerm", $("#query").val(), 365)
+
+      if(data && data.value.length > 0) {
+        // Clear results
+        $("#results").html("")
+
+        // Get the search id, which for whatever reason is hidden in the headers        
+        let searchId = xhr.getResponseHeader('x-ms-azs-searchid');
+        console.log(`### Search for "${query}" returned ${data.value.length} results, tracked with searchId: ${searchId}`);
+        
+        // Log SEARCH event with App Insights, initialized in head/custom.html include file
+        window.appInsights.trackEvent("Search", {
+          SearchServiceName: AZURE_SEARCH_ACCOUNT,
+          SearchId: searchId,
+          IndexName: AZURE_SEARCH_INDEX,
+          QueryTerms: query,
+          ResultCount: data.value.length,
+          ScoringProfile: "none"
+        });
+
+        let docRank = 0 // Just a simple counter
+
+        // Process results
+        for(let result of data.value) {
+          // Handle long/missing excerpts
+          let excerpt = result.excerpt
+          if(result.excerpt == null) excerpt = ""
+          excerpt = excerpt.substr(0, 160) + (excerpt.length > 160 ? '&hellip;' : '')
+
+          // People are can be idiots and don't correctly specify the teaser image path
+          if(!result.teaser.startsWith('/')) result.teaser = `/${result.teaser}`
+
+          // Add result to page
+          $("#results").append(`
+          <div class="grid__item">
+            <article class="archive__item">
+              <div class="archive__item-teaser">
+                <img src="${result.teaser}" alt="">
+              </div>
+              <h2 class="archive__item-title" itemprop="headline">
+                <a onclick="searchClick('${result.url}', '${searchId}', ${docRank++})" href="${result.url}" rel="permalink">${result.title}</a>           
+              </h2>     
+              <p class="page__meta">${result.author} &mdash; ${result.date}</p>
+              <p class="archive__item-excerpt" itemprop="description">${excerpt}</p>         
+            </article>
+          </div>`)
+        }
+      }
+    })
+  }
+
+  //
+  // Delay function pinched from internet
+  //
+  function delay(callback, ms) {
+    var timer = 0
+    return function() {
+      $("#spinner").show()
+      var context = this, args = arguments;
+      clearTimeout(timer)
+      timer = setTimeout(function () {
+        callback.apply(context, args)
+      }, ms || 0)
+    };
+  }   
+
+  //
+  // Register click with App Insights and save to cookie
+  //
+  function searchClick(docId, searchId, rank) {
+    // Log CLICK event with App Insights, initialized in head/custom.html include file
+    window.appInsights.trackEvent("Click", {
+      SearchServiceName: AZURE_SEARCH_ACCOUNT,
+      SearchId: searchId,
+      ClickedDocId: docId,
+      Rank: rank
+    })
+
+    // Set cookie to remember our searchTerm and hide spinner
+    cookieCreate("searchTerm", $("#query").val(), 365)
+  }
+
+  //
+  // Generic cookie write/create function
+  //
+  function cookieCreate(name,value,days) {
+    var expires = ""
+    if (days) {
+        var date = new Date()
+        date.setTime(date.getTime() + (days*24*60*60*1000))
+        expires = "; expires=" + date.toUTCString()
+    }
+    document.cookie = name + "=" + value + expires + "; path=/"
+  }
+
+  //
+  // Generic cookie read function
+  //
+  function cookieRead(name) {
+    var nameEQ = name + "="
+    var ca = document.cookie.split(';')
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i]
+        while (c.charAt(0)==' ') c = c.substring(1,c.length)
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length)
+    }
+    return null
+  }  
+
+  //
+  // Cheap and dirty GUID generator
+  //
+  function guid() {
+    function s4() {
+      return Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1)
+    }
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+  }
+
+</script>
