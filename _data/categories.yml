@@ -1,12 +1,12 @@
-- name: automation
-  title: Automation
+- name: singapore
+  title: Singpore
   image: /images/categories/auto.png
-  desc: "Operate at scale using scaffolding, infrastructure as code and scripting to automate"
+  desc: "Malayalam Classes Available in Singpore"
 
-- name: cloud-native
-  title: Cloud Native
+- name: malaysia
+  title: Malaysia
   image: /images/categories/containers.png
-  desc: "Understand how to build cloud native, modern apps with containers, serverless & Kubernetes"
+  desc: "Classes Available in Malaysia"
 
 - name: data-ai
   title: "Data & AI"
